@@ -4,47 +4,46 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-                Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
-                System.out.println("Оберіть напій/напої:");
+        Drinks drinks = new Drinks();
 
-                while (true) {
-                    System.out.println("Доступні напої:");
-                    System.out.print("-1. Кава \n-2. Чай \n-3. Лимонад\n-4. Мохіто\n" +
-                    "-5. Мінеральна вода\n-6. Кока-кола\n-7. Завершити замовлення\n");
+        System.out.println("Ціни на напої:");
+        for (Drinks.DrinkType drinkType : Drinks.DrinkType.values()) {
+            System.out.println(drinkType + ": ₴" + drinkType.getPrice());
+        }
 
-                    System.out.print("Оберіть номер напою:");
-                    int makeAChoice = scanner.nextInt();
+        System.out.println("\nВиберіть напій:");
+        for (DrinksMachine drink : DrinksMachine.values()) {
+            System.out.println((drink.ordinal() + 1) + ". " + drink);
+        }
 
-                   if (makeAChoice == 7) {
-                        break;
-                    }
+        System.out.println("Для виходу натисніть 0");
 
-                    switch (makeAChoice) {
-                        case 1:
-                            Drinks.makeDrinks(DrinksMachine.COFFEE);
-                            break;
-                        case 2:
-                            Drinks.makeDrinks(DrinksMachine.TEA);
-                            break;
-                        case 3:
-                            Drinks.makeDrinks(DrinksMachine.LEMONADE);
-                            break;
-                        case 4:
-                            Drinks.makeDrinks(DrinksMachine.MOJITO);
-                            break;
-                        case 5:
-                            Drinks.makeDrinks(DrinksMachine.MINERAL_WATER);
-                            break;
-                        case 6:
-                            Drinks.makeDrinks(DrinksMachine.COCA_COLA);
-                            break;
-                        default:
-                            System.out.println("Неправильний вибір");
-                            System.out.println();
-                    }
+        while (true) {
+            System.out.print("Ваш вибір: ");
+            String choice = scanner.nextLine();
+            if (choice.equals("0")) {
+                break;
+            } else if (choice.matches("\\d+")) {
+                int numericChoice = Integer.parseInt(choice);
+                if (numericChoice >= 1 && numericChoice <= DrinksMachine.values().length) {
+                    drinks.makeDrink(DrinksMachine.values()[numericChoice - 1]);
+                } else {
+                    System.out.println("Неправильний вибір.");
                 }
-                 Drinks.printTotal();
+            } else {
+                try {
+                    DrinksMachine chosenDrink = DrinksMachine.valueOf(choice.toUpperCase());
+                    drinks.makeDrink(chosenDrink);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Неправильний вибір.");
+                }
             }
         }
 
+        drinks.displayTotal();
+
+        scanner.close();
+    }
+}

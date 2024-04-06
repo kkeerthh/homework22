@@ -1,51 +1,66 @@
 import drinksList.DrinksMachine;
 
 public class Drinks {
+    enum DrinkType {
+        COFFEE(22.5),
+        TEA(15.0),
+        LEMONADE(20.0),
+        MOJITO(27.5),
+        MINERAL_WATER(15.6),
+        COCA_COLA(33.0);
+        private final double price;
 
-    static final double COFFEE_PRICE = 22.5;
-    static final double TEA_PRICE = 15.0;
-    static final double LEMONADE_PRICE = 20.0;
-    static final double MOJITO_PRICE = 29.9;
-    static final double MINERAL_WATER_PRICE = 14.0;
-    static final double COCA_COLA_PRICE = 26.5;
+        DrinkType(double price) {
+            this.price = price;
+        }
 
-    static int totalDrinks = 0;
-    static double totalPrice = 0.0;
-
-    static void makeDrinks(DrinksMachine drink) {
-        switch (drink) {
-            case COFFEE:
-                totalDrinks++;
-                totalPrice += COFFEE_PRICE;
-                break;
-            case TEA:
-                totalDrinks++;
-                totalPrice += TEA_PRICE;
-                break;
-            case LEMONADE:
-                totalDrinks++;
-                totalPrice += LEMONADE_PRICE;
-                break;
-            case MOJITO:
-                totalDrinks++;
-                totalPrice += MOJITO_PRICE;
-                break;
-            case MINERAL_WATER:
-                totalDrinks++;
-                totalPrice += MINERAL_WATER_PRICE;
-                break;
-            case COCA_COLA:
-                totalDrinks++;
-                totalPrice += COCA_COLA_PRICE;
-                break;
-            default:
-                System.out.println("Неправильний вибір");
+        public double getPrice() {
+            return price;
         }
     }
 
+    static private int totalDrinks = 0;
+    static private double totalPrice = 0.0;
 
-    static void printTotal() {
-        System.out.println("Кількість напоїв: " + totalDrinks);
-        System.out.println("Загальна сума: ₴" + totalPrice);
+    void makeDrink(DrinksMachine drink) {
+        switch (drink) {
+            case COFFEE:
+                System.out.println("Готується кава...");
+                totalDrinks++;
+                totalPrice += DrinkType.COFFEE.getPrice();
+                break;
+            case TEA:
+                System.out.println("Готується чай...");
+                totalDrinks++;
+                totalPrice += DrinkType.TEA.getPrice();
+                break;
+            case LEMONADE:
+                System.out.println("Готується лимонад...");
+                totalDrinks++;
+                totalPrice += DrinkType.LEMONADE.getPrice();
+                break;
+            case MOJITO:
+                System.out.println("Готується мохіто...");
+                totalDrinks++;
+                totalPrice += DrinkType.MOJITO.getPrice();
+                break;
+            case MINERAL_WATER:
+                System.out.println("Готується мінеральна вода...");
+                totalDrinks++;
+                totalPrice += DrinkType.MINERAL_WATER.getPrice();
+                break;
+            case COCA_COLA:
+                System.out.println("Готується кока-кола...");
+                totalDrinks++;
+                totalPrice += DrinkType.COCA_COLA.getPrice();
+                break;
+            default:
+                System.out.println("Неправильний вибір.");
+        }
+    }
+
+    void displayTotal() {
+        System.out.println("Загальна кількість напоїв: " + totalDrinks);
+        System.out.println("Загальна сума до оплати: ₴" + totalPrice);
     }
 }
